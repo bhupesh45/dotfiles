@@ -1,0 +1,226 @@
+/* === Ultra-Minimal Monokai Pro Waybar === */
+
+* {
+  transition:
+    background 0.15s ease,
+    border 0.15s ease;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: "SF Pro Display", "JetBrainsMono Nerd Font Propo", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* === Floating Container === */
+window#waybar {
+  background: transparent;
+}
+
+window#waybar > box {
+  margin: 7px 16px 7px 16px;
+}
+
+/* === Base Module Style === */
+#workspaces button,
+#window,
+#network,
+#pulseaudio,
+#backlight,
+#battery,
+#clock,
+#tray,
+#idle_inhibitor,
+#custom-updates,
+#custom-weather,
+#custom-notification,
+#custom-media {
+  background: #2d2a2e;
+  border: 1px solid #3f3c41;
+  border-radius: 12px;
+  color: #d6d6d3;
+  padding: 6px 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* === Workspaces === */
+#workspaces {
+  margin-right: 10px;
+}
+
+#workspaces button {
+  min-width: 28px;
+  margin-right: 6px;
+  background: #262326;
+  color: #9e9e9b;
+  padding: 4px 10px;
+}
+
+#workspaces button:hover {
+  background: #333035;
+  color: #e0e0dc;
+}
+
+#workspaces button.active {
+  background: #403e41;
+  color: #ffd866;
+  border: 1.5px solid #ffd866;
+}
+
+/* === Focused Window === */
+#window {
+  margin-right: 10px;
+  padding: 6px 18px;
+  background: #302d30;
+  color: #eaeae7;
+}
+
+window#waybar.empty #window {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* === Hover (Barely There) === */
+#network:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover,
+#clock:hover,
+#tray:hover,
+#idle_inhibitor:hover,
+#custom-updates:hover,
+#custom-weather:hover,
+#custom-notification:hover,
+#custom-media:hover {
+  background: #343136;
+}
+
+/* === Network === */
+#network.disconnected {
+  background: #3b2327;
+  color: #ff6188;
+  border-color: #ff6188;
+}
+
+/* === Audio === */
+#pulseaudio.muted {
+  background: #2f2c2f;
+  color: #8e8e8b;
+}
+
+/* === Battery === */
+#battery.charging {
+  background: #2f3f34;
+  color: #a9dc76;
+  border-color: #a9dc76;
+}
+
+#battery.warning:not(.charging) {
+  background: #3f3724;
+  color: #ffd866;
+  border-color: #ffd866;
+}
+
+#battery.critical:not(.charging) {
+  background: #402327;
+  color: #ff6188;
+  border-color: #ff6188;
+}
+
+/* === Clock (Anchor) === */
+#clock {
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  background: #353237;
+  color: #f0f0ed;
+}
+
+/* === Tray === */
+#tray {
+  margin-right: 0;
+}
+
+/* === Swaync === */
+#custom-notification {
+  font-size: 16px;
+}
+
+/* Normal notifications */
+#custom-notification.notification {
+  color: #a6e22e; /* Monokai green */
+}
+
+/* No notifications */
+#custom-notification.none {
+  color: #75715e; /* Monokai gray */
+}
+
+/* Do Not Disturb notifications */
+#custom-notification.dnd-notification {
+  color: #66d9ef; /* Monokai blue */
+}
+
+#custom-notification.dnd-none {
+  color: #75715e; /* gray for no DND notifications */
+}
+
+/* Inhibited notifications */
+#custom-notification.inhibited-notification {
+  color: #fd971f; /* Monokai orange */
+}
+
+#custom-notification.inhibited-none {
+  color: #75715e; /* gray for no inhibited notifications */
+}
+
+/* DND + Inhibited notifications */
+#custom-notification.dnd-inhibited-notification {
+  color: #f92672; /* Monokai red / critical-style */
+}
+
+#custom-notification.dnd-inhibited-none {
+  color: #75715e; /* gray for no notifications */
+}
+
+/* Critical notifications (urgent) */
+#custom-notification.urgent {
+  color: #f92672; /* bright red for urgent */
+}
+
+/* === Menu === */
+menu {
+  background: #2d2a2e;
+  border: 1px solid #3f3c41;
+  border-radius: 12px;
+  padding: 6px 0;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.75);
+}
+
+menu menuitem {
+  padding: 8px 18px;
+  margin: 2px 10px;
+  border-radius: 8px;
+  color: #d6d6d3;
+}
+
+menu menuitem:hover {
+  background: #403e41;
+  color: #ffd866;
+}
+
+menu separator {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin: 6px 14px;
+}
+
+/* === Tooltip === */
+tooltip {
+  background: #2d2a2e;
+  border: 1px solid #3f3c41;
+  border-radius: 10px;
+  padding: 6px 12px;
+  color: #d6d6d3;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+}
+

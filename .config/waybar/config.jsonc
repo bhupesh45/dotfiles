@@ -1,0 +1,209 @@
+// -*- mode: jsonc -*-
+{
+    // Bar settings
+    "layer": "top", 
+    "position": "top",
+    "height": 40,
+    "spacing": 6, // Gaps between modules
+
+    // Module layout
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/media"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        // "mpd",
+        // "idle_inhibitor",
+        "pulseaudio",
+        "network",
+        // "cpu",
+        // "memory",
+        // "temperature",
+        "backlight",
+        "keyboard-state",
+        "battery",
+        "clock",
+        "tray",
+        "custom/notification"
+        // "custom/power"
+    ],
+
+    // Workspaces (minimal look with icons)
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        // "format-icons": {
+        //     "1": "", // terminal
+        //     "2": "", // browser
+        //     "3": "", // code
+        //     "4": "", // music
+        //     "5": "", // chat
+        //     "urgent": "",
+        //     "focused": "",
+        //     "default": ""
+        // }
+    },
+
+    "hyprland/window": {
+        "max-length": 30,   // maximum number of characters
+        "format": "{title}",  // window title
+    },
+
+    // Keyboard indicators
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+
+    // Scratchpad
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip-format": "{app}: {title}"
+    },
+
+    // MPD (Music Player Daemon)
+    "mpd": {
+        "format": "{stateIcon} {artist} - {title} ",
+        "format-disconnected": " MPD",
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "interval": 5
+    },
+
+    // Idle inhibitor
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    // Tray
+    "tray": {
+        "spacing": 8,
+        "icon-size": 20
+    },
+
+    // Clock (dual-format with calendar tooltip)
+    "clock": {
+        "format": " {:%I:%M %p}",
+        "format-alt": " {:%d-%m-%Y}",
+        "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    // CPU
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+
+    // Memory
+    "memory": {
+        "format": " {used:0.1f}G / {total:0.1f}G"
+    },
+
+    // Temperature
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+
+    // Backlight
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    // Battery
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    // Network
+    "network": {
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": " {ipaddr}",
+        "format-disconnected": "⚠ Disconnected"
+    },
+
+    // Audio
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    // Media (MPRIS script)
+    "custom/media": {
+        "format": "{icon} {text}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎵"
+        },
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+    },
+
+    // Power button
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "shutdown": "shutdown now",
+            "reboot": "reboot",
+            "suspend": "systemctl suspend",
+            "hibernate": "systemctl hibernate"
+        }
+    },
+
+    // Swaync
+    "custom/notification": {
+        "tooltip": true,
+        "format": "<span>{icon}</span>",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂜",
+            "dnd-notification": "󰂠",
+            "dnd-none": "󰪓",
+            "inhibited-notification": "󰂛",
+            "inhibited-none": "󰪑",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    }
+}

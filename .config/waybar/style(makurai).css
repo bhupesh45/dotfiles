@@ -1,0 +1,273 @@
+/* Enhanced Makurai Theme for Waybar */
+* {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-family: "SF Pro Display", "JetBrainsMono Nerd Font Propo", sans-serif;
+    font-weight: 600;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+window#waybar > box {
+    margin: 8px 10px 4px 10px;
+}
+
+/* Workspace buttons */
+#workspaces {
+    margin-right: 8px;
+}
+
+#workspaces button {
+    background: linear-gradient(135deg, #15161b 0%, #1a1c23 100%);
+    border-radius: 8px;
+    border: 2px solid #ff5555;
+    padding: 4px;
+    margin-right: 6px;
+    color: #e0e0e0;
+    min-width: 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#workspaces button:hover {
+    background: linear-gradient(135deg, #1f2129 0%, #24262e 100%);
+    color: #ffffff;
+    border-color: #ff6b6b;
+    box-shadow: 0 3px 8px rgba(255, 85, 85, 0.3);
+}
+
+#workspaces button.active {
+    background: linear-gradient(135deg, #002880 0%, #003399 100%);
+    color: #ffffff;
+    border-color: #ff5555;
+    box-shadow: 0 3px 10px rgba(0, 40, 128, 0.5);
+}
+
+#workspaces button.urgent {
+    background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+    border-color: #ff8888;
+    box-shadow: 0 3px 15px rgba(255, 85, 85, 0.8);
+}
+
+#workspaces button.urgent {
+    animation: urgent-pulse 1.5s ease-in-out infinite;
+}
+
+/* Focused window */
+#window {
+    background: linear-gradient(135deg, #394047 0%, #434b54 100%);
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 4px 16px;
+    margin-right: 8px;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+window#waybar.empty #window {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+/* Module container styling */
+#network,
+#pulseaudio,
+#backlight,
+#battery,
+#clock,
+#tray {
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 4px 14px;
+    margin-right: 6px;
+    color: #ffffff;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Network */
+#network {
+    background: linear-gradient(135deg, #2e3352 0%, #363b5e 100%);
+}
+
+#network:hover {
+    background: linear-gradient(135deg, #363b5e 0%, #3e4368 100%);
+    border-color: #ff6b6b;
+}
+
+#network.disconnected {
+    background: linear-gradient(135deg, #4a2929 0%, #5a3030 100%);
+    color: #ff8888;
+}
+
+/* Audio */
+#pulseaudio {
+    background: linear-gradient(135deg, #5c6773 0%, #687481 100%);
+}
+
+#pulseaudio:hover {
+    background: linear-gradient(135deg, #687481 0%, #74818f 100%);
+    border-color: #ff6b6b;
+}
+
+#pulseaudio.muted {
+    background: linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%);
+    color: #999999;
+}
+
+/* Brightness */
+#backlight {
+    background: linear-gradient(135deg, #15161b 0%, #1d1f26 100%);
+}
+
+#backlight:hover {
+    background: linear-gradient(135deg, #1d1f26 0%, #25272f 100%);
+    border-color: #ff6b6b;
+}
+
+/* Battery */
+#battery {
+    background: linear-gradient(135deg, #15161b 0%, #1d1f26 100%);
+    padding: 4px 14px;
+}
+
+#battery:hover {
+    background: linear-gradient(135deg, #1d1f26 0%, #25272f 100%);
+    border-color: #ff6b6b;
+}
+
+#battery.charging {
+    background: linear-gradient(135deg, #1e3a1e 0%, #2d4a2d 100%);
+    color: #66bb6a;
+    border-color: #4caf50;
+}
+
+#battery.warning:not(.charging) {
+    background: linear-gradient(135deg, #4a3d1e 0%, #5a4d2d 100%);
+    color: #ffb74d;
+    border-color: #ffa726;
+}
+
+#battery.critical:not(.charging) {
+    background: linear-gradient(135deg, #4a1e1e 0%, #5a2d2d 100%);
+    color: #ef5350;
+    border-color: #e53935;
+}
+
+/* Clock */
+#clock {
+    background: linear-gradient(135deg, #264f78 0%, #2f5e8f 100%);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+#clock:hover {
+    background: linear-gradient(135deg, #2f5e8f 0%, #3a6fa3 100%);
+    border-color: #ff6b6b;
+}
+
+/* Tray */
+#tray {
+    background: linear-gradient(135deg, #15161b 0%, #1d1f26 100%);
+    margin-right: 0;
+}
+
+#tray:hover {
+    background: linear-gradient(135deg, #1d1f26 0%, #25272f 100%);
+    border-color: #ff6b6b;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* Tray Popup Menu */
+menu {
+    background: linear-gradient(135deg, #1b1d24 0%, #21232c 100%);
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 6px 0;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+menu menuitem {
+    padding: 8px 18px;
+    margin: 2px 8px;
+    color: #e0e0e0;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+menu menuitem:hover,
+menu menuitem:focus {
+    background: linear-gradient(135deg, #ff5555 0%, #ff6b6b 100%);
+    color: #ffffff;
+}
+
+menu menuitem:disabled {
+    color: #666666;
+    opacity: 0.5;
+}
+
+menu separator {
+    border-top: 1px solid rgba(255, 85, 85, 0.4);
+    margin: 6px 12px;
+}
+
+/* Tooltip */
+tooltip {
+    background: linear-gradient(135deg, #1b1d24 0%, #21232c 100%);
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    color: #e0e0e0;
+    padding: 6px 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+tooltip label {
+    font-weight: 500;
+}
+
+/* Idle Inhibitor */
+#idle_inhibitor {
+    background: linear-gradient(135deg, #15161b 0%, #1d1f26 100%);
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 4px 14px;
+    margin-right: 6px;
+    color: #ffffff;
+}
+
+#idle_inhibitor.activated {
+    background: linear-gradient(135deg, #4a3d1e 0%, #5a4d2d 100%);
+    border-color: #ffa726;
+    color: #ffb74d;
+}
+
+/* Custom modules */
+#custom-updates,
+#custom-weather,
+#custom-media {
+    background: linear-gradient(135deg, #15161b 0%, #1d1f26 100%);
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 4px 14px;
+    margin-right: 6px;
+    color: #ffffff;
+}
+
+#custom-updates:hover,
+#custom-weather:hover,
+#custom-media:hover {
+    background: linear-gradient(135deg, #1d1f26 0%, #25272f 100%);
+    border-color: #ff6b6b;
+}
