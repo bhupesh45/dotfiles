@@ -20,7 +20,7 @@ else
   rm -f "$EMPTY_FILE" "$CRITICAL_FILE"
 fi
 
-if [ "$BATTERY_LEVEL" -ge 80 ] && [ "$DISCHARGING" -eq 0 ] && [ ! -f "$FULL_FILE" ]; then
+if [ "$BATTERY_LEVEL" -ge 90 ] && [ "$DISCHARGING" -eq 0 ] && [ ! -f "$FULL_FILE" ]; then
   notify-send "Battery Full" "Unplug charger" -i battery-full -r 9991
   touch "$FULL_FILE"
 
