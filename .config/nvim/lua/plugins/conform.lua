@@ -32,6 +32,7 @@ return {
 			graphql = { "prettierd" },
 			java = { "google-java-format" },
 			go = { "goimports", "gofumpt" },
+			xml = { "xmlformatter" },
 		},
 		formatters = {
 			injected = { options = { ignore_errors = true } },
