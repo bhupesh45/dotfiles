@@ -1,24 +1,46 @@
 return {
 	"L3MON4D3/LuaSnip",
+
 	event = "InsertEnter",
-	dependencies = { "rafamadriz/friendly-snippets" },
+
+	version = "v2.*",
+
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+	},
+
 	config = function()
 		local ls = require("luasnip")
 
-		-- Load "friendly-snippets" (generic stuff)
+		-- Recommended config
+		ls.config.set_config({
+			history = true,
+
+			updateevents = "TextChanged,TextChangedI",
+
+			enable_autosnippets = true,
+		})
+
+		-- VSCode snippets
 		require("luasnip.loaders.from_vscode").lazy_load()
 
-		-- Load YOUR custom lua snippets from lua/snippets/*.lua
-		require("luasnip.loaders.from_lua").load({ paths = "./lua/snippets" })
+		-- Your custom snippets
+		require("luasnip.loaders.from_lua").load({
+			paths = { "./lua/snippets" },
+		})
 
-		-- Keymaps for jumping inside snippets
-		-- Jump forward: Ctrl-L
+		-- Jump forward
 		vim.keymap.set({ "i", "s" }, "<C-L>", function()
-			ls.jump(1)
+			if ls.jumpable(1) then
+				ls.jump(1)
+			end
 		end, { silent = true })
-		-- Jump backward: Ctrl-J
+
+		-- Jump backward
 		vim.keymap.set({ "i", "s" }, "<C-J>", function()
-			ls.jump(-1)
+			if ls.jumpable(-1) then
+				ls.jump(-1)
+			end
 		end, { silent = true })
 	end,
 }
