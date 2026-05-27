@@ -52,5 +52,5 @@ hl.bind(mod .. " + SHIFT + 0", hl.dsp.exec_cmd(zoom_reset_cmd))
 --- ALT / TAB ---
 -----------------
 
--- hl.bind("ALT + Tab", hl.dsp.cyclenext("skipvisible"))
--- hl.bind("ALT + SHIFT + Tab", hl.dsp.cyclenext("prev skipvisible"))
+hl.bind("ALT + Tab", hl.dsp.window.cycle_next())
+hl.bind("ALT + SHIFT + Tab", hl.dsp.window.cycle_next({ prev = true }))
