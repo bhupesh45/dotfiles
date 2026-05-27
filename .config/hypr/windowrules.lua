@@ -107,3 +107,11 @@ hl.window_rule({ match = { float = false, workspace = "fs[false]" }, border_size
 hl.layer_rule({ match = { namespace = "logout_dialog" }, animation = "slide top" })
 hl.layer_rule({ match = { namespace = "waybar" }, animation = "slide down" })
 hl.layer_rule({ match = { namespace = "wallpaper" }, animation = "fade 50%" })
+
+-- Scroll nicely in standard terminals.
+hl.window_rule({
+	match = {
+		class = "^(Alacritty|kitty|foot)$",
+	},
+	scroll_touchpad = 1.5,
+})
