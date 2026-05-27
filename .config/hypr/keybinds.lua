@@ -4,8 +4,8 @@ local mod = "SUPER" -- Sets "Windows" key as main modifier
 ---- FULLSCREEN ----
 --------------------
 
--- hl.bind(mod .. " + F", hl.dsp.fullscreenstate("3"))
--- hl.bind(mod .. " + grave", hl.dsp.fullscreen())
+hl.bind(mod .. " + F", hl.dsp.window.fullscreen_state({ internal = 2, client = 0, action = "toggle" }))
+hl.bind(mod .. " + grave", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
 --------------------
 ---- SCREENSHOT ----
