@@ -103,7 +103,7 @@ return {
 	priority = 1000,
 
 	opts = {
-		transparent_background = true,
+		transparent_background = false,
 		gamma = 1.0,
 		terminal_colors = true,
 
