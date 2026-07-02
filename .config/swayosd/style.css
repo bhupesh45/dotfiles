@@ -1,0 +1,59 @@
+/* ==================================================================
+   SwayOSD Tokyo Dark CSS - Ultra Pro Max Legend Edition
+   ================================================================== */
+
+window#osd {
+  border-radius: 16px; /* Matched to Waybar and SwayNC */
+  border: 1px solid #4a5057; /* Subtle Tokyo Gray border */
+  background: rgba(17, 18, 29, 0.95); /* Deep Ink Black glass */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Floating shadow */
+}
+
+window#osd #container {
+  margin: 12px;
+  padding: 4px;
+  background: transparent;
+}
+
+window#osd image {
+  -gtk-icon-transform: scale(0.75); /* Slightly enlarged for clarity */
+}
+
+/* Icons and Text */
+window#osd image,
+window#osd label {
+  color: #7199ee; /* Tokyo Blue Accent */
+  font-weight: 700;
+  font-family: "SF Pro Display", "JetBrainsMono Nerd Font", sans-serif;
+}
+
+window#osd progressbar:disabled,
+window#osd image:disabled {
+  opacity: 0.3;
+}
+
+/* The Slider Bar */
+window#osd progressbar,
+segmentedprogress {
+  min-height: 8px; /* Slightly thicker for better visibility */
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+}
+
+/* The Empty Track */
+window#osd trough, segment {
+  min-height: inherit;
+  border-radius: inherit;
+  border: none;
+  background: #212234; /* Tokyo Dark Gray */
+}
+
+/* The Filled Track */
+window#osd progress, segment.active {
+  min-height: inherit;
+  border-radius: inherit;
+  border: none;
+  background: #7199ee; /* Tokyo Blue Fill */
+  transition: all 0.1s ease;
+}
