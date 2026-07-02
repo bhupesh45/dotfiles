@@ -1,4 +1,4 @@
-/* === Ultra-Minimal Monokai Pro Waybar === */
+/* === Ultra-Minimal Tokyo Dark Waybar === */
 
 * {
   transition:
@@ -35,10 +35,10 @@ window#waybar > box {
 #custom-weather,
 #custom-notification,
 #custom-media {
-  background: #2d2a2e;
-  border: 1px solid #3f3c41;
-  border-radius: 12px;
-  color: #d6d6d3;
+  background: #212234; /* Tokyo Dark Gray */
+  border: 1px solid #4a5057; /* Subtle border */
+  border-radius: 16px; /* Slightly rounder for the "bubble" look */
+  color: #a0a8e3; /* Tokyo Dark Foreground */
   padding: 6px 14px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
@@ -51,28 +51,29 @@ window#waybar > box {
 #workspaces button {
   min-width: 28px;
   margin-right: 6px;
-  background: #262326;
-  color: #9e9e9b;
+  background: #11121d; /* Deepest background for inactive */
+  color: #4a5057; /* Muted text */
   padding: 4px 10px;
 }
 
 #workspaces button:hover {
-  background: #333035;
-  color: #e0e0dc;
+  background: #212234;
+  color: #a0a8e3;
 }
 
 #workspaces button.active {
-  background: #403e41;
-  color: #ffd866;
-  border: 1.5px solid #ffd866;
+  background: #212234;
+  color: #7199ee; /* Tokyo Blue accent */
+  border: 1.5px solid #7199ee;
 }
 
 /* === Focused Window === */
 #window {
   margin-right: 10px;
   padding: 6px 18px;
-  background: #302d30;
-  color: #eaeae7;
+  background: transparent; /* Allows wallpaper to bleed through slightly */
+  border: 1px solid #4a5057;
+  color: #a0a8e3;
 }
 
 window#waybar.empty #window {
@@ -86,54 +87,60 @@ window#waybar.empty #window {
 #pulseaudio:hover,
 #backlight:hover,
 #battery:hover,
-#clock:hover,
 #tray:hover,
 #idle_inhibitor:hover,
 #custom-updates:hover,
 #custom-weather:hover,
 #custom-notification:hover,
 #custom-media:hover {
-  background: #343136;
+  background: #2a2b3d; /* Slightly lighter gray */
 }
 
 /* === Network === */
 #network.disconnected {
-  background: #3b2327;
-  color: #ff6188;
-  border-color: #ff6188;
+  background: #2f1e24; /* Deep red tint */
+  color: #ee6d85; /* Tokyo Red */
+  border-color: #ee6d85;
 }
 
 /* === Audio === */
 #pulseaudio.muted {
-  background: #2f2c2f;
-  color: #8e8e8b;
+  background: #11121d;
+  color: #4a5057;
 }
 
 /* === Battery === */
 #battery.charging {
-  background: #2f3f34;
-  color: #a9dc76;
-  border-color: #a9dc76;
+  background: #1d2d24; /* Deep green tint */
+  color: #9ece6a; /* Tokyo Green */
+  border-color: #9ece6a;
 }
 
 #battery.warning:not(.charging) {
-  background: #3f3724;
-  color: #ffd866;
-  border-color: #ffd866;
+  background: #2d251a; /* Deep yellow tint */
+  color: #d7a65f; /* Tokyo Yellow */
+  border-color: #d7a65f;
 }
 
 #battery.critical:not(.charging) {
-  background: #402327;
-  color: #ff6188;
-  border-color: #ff6188;
+  background: #2f1e24;
+  color: #ee6d85;
+  border-color: #ee6d85;
 }
 
 /* === Clock (Anchor) === */
+/* Mirrored to match the Tmux time module on the bottom right */
 #clock {
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.4px;
-  background: #353237;
-  color: #f0f0ed;
+  background: #9ece6a;
+  color: #11121d;
+  border: 1px solid #9ece6a;
+}
+
+#clock:hover {
+  background: #a0a8e3;
+  border-color: #a0a8e3;
 }
 
 /* === Tray === */
@@ -141,57 +148,58 @@ window#waybar.empty #window {
   margin-right: 0;
 }
 
-/* === Swaync === */
+/* === Swaync Notifications === */
 #custom-notification {
   font-size: 16px;
 }
 
 /* Normal notifications */
 #custom-notification.notification {
-  color: #a6e22e; /* Monokai green */
+  color: #9ece6a; /* Tokyo Green */
 }
 
 /* No notifications */
 #custom-notification.none {
-  color: #75715e; /* Monokai gray */
+  color: #4a5057; /* Tokyo Gray */
 }
 
 /* Do Not Disturb notifications */
 #custom-notification.dnd-notification {
-  color: #66d9ef; /* Monokai blue */
+  color: #7199ee; /* Tokyo Blue */
 }
 
 #custom-notification.dnd-none {
-  color: #75715e; /* gray for no DND notifications */
+  color: #4a5057;
 }
 
 /* Inhibited notifications */
 #custom-notification.inhibited-notification {
-  color: #fd971f; /* Monokai orange */
+  color: #f69c5e; /* Tokyo Orange */
 }
 
 #custom-notification.inhibited-none {
-  color: #75715e; /* gray for no inhibited notifications */
+  color: #4a5057;
 }
 
 /* DND + Inhibited notifications */
 #custom-notification.dnd-inhibited-notification {
-  color: #f92672; /* Monokai red / critical-style */
+  color: #ee6d85; /* Tokyo Red */
 }
 
 #custom-notification.dnd-inhibited-none {
-  color: #75715e; /* gray for no notifications */
+  color: #4a5057;
 }
 
 /* Critical notifications (urgent) */
 #custom-notification.urgent {
-  color: #f92672; /* bright red for urgent */
+  color: #ee6d85;
+  border-color: #ee6d85;
 }
 
 /* === Menu === */
 menu {
-  background: #2d2a2e;
-  border: 1px solid #3f3c41;
+  background: #11121d;
+  border: 1px solid #4a5057;
   border-radius: 12px;
   padding: 6px 0;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.75);
@@ -201,26 +209,28 @@ menu menuitem {
   padding: 8px 18px;
   margin: 2px 10px;
   border-radius: 8px;
-  color: #d6d6d3;
+  color: #a0a8e3;
 }
 
 menu menuitem:hover {
-  background: #403e41;
-  color: #ffd866;
+  background: #212234;
+  color: #7199ee;
 }
 
 menu separator {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(160, 168, 227, 0.1);
   margin: 6px 14px;
 }
 
 /* === Tooltip === */
 tooltip {
-  background: #2d2a2e;
-  border: 1px solid #3f3c41;
+  background: #11121d;
+  border: 1px solid #4a5057;
   border-radius: 10px;
   padding: 6px 12px;
-  color: #d6d6d3;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
 }
 
+tooltip label {
+  color: #a0a8e3;
+}
