@@ -51,8 +51,8 @@ window#waybar > box {
 #workspaces button {
   min-width: 28px;
   margin-right: 6px;
-  background: #11121d; /* Deepest background for inactive */
-  color: #4a5057; /* Muted text */
+  background: #212234; /* Tokyo Dark Gray */
+  color: #a0a8e3; /* Tokyo Dark Foreground */
   padding: 4px 10px;
 }
 
