@@ -31,7 +31,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("~/.config/hypr/scripts/battery/battery-watch.sh")
 end)
 
-hl.exec_cmd("hyprshade on vibrance")
+hl.exec_cmd("uwsm app -- hyprshade on vibrance")
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
