@@ -6,5 +6,5 @@ return {
 	terminal = "kitty",
 	fileManager = "nautilus",
 	menu = "vicinae toggle",
-	browser = "brave",
+	browser = "zen-browser",
 }
