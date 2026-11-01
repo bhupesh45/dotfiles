@@ -1,11 +1,15 @@
 /* ==================================================================
-   SwayOSD Tokyo Dark CSS - Ultra Pro Max Legend Edition
+   SwayOSD Dynamic Dark Iris CSS - Ultra Pro Max Legend Edition
    ================================================================== */
+@import "../../.cache/iris/colors-waybar.css";
+
+@define-color dark_bg mix(#07080c, @bg, 0.50);
+@define-color dark_surface mix(#10121c, @surface, 0.60);
 
 window#osd {
   border-radius: 16px; /* Matched to Waybar and SwayNC */
-  border: 1px solid #4a5057; /* Subtle Tokyo Gray border */
-  background: rgba(17, 18, 29, 0.95); /* Deep Ink Black glass */
+  border: 1.5px solid @dim; /* Subtle Iris Dim border */
+  background: alpha(@dark_bg, 0.95); /* Deep Obsidian Glass */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Floating shadow */
 }
 
@@ -22,7 +26,7 @@ window#osd image {
 /* Icons and Text */
 window#osd image,
 window#osd label {
-  color: #7199ee; /* Tokyo Blue Accent */
+  color: @accent; /* Vibrant Iris Accent */
   font-weight: 700;
   font-family: "SF Pro Display", "JetBrainsMono Nerd Font", sans-serif;
 }
@@ -42,18 +46,20 @@ segmentedprogress {
 }
 
 /* The Empty Track */
-window#osd trough, segment {
+window#osd trough,
+segment {
   min-height: inherit;
   border-radius: inherit;
   border: none;
-  background: #212234; /* Tokyo Dark Gray */
+  background: @dark_surface; /* Elevated Obsidian Surface */
 }
 
 /* The Filled Track */
-window#osd progress, segment.active {
+window#osd progress,
+segment.active {
   min-height: inherit;
   border-radius: inherit;
   border: none;
-  background: #7199ee; /* Tokyo Blue Fill */
+  background: @accent; /* Vibrant Iris Accent Fill */
   transition: all 0.1s ease;
 }

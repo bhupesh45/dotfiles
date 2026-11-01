@@ -162,11 +162,15 @@ awww img "$WALLPAPER" --transition-type grow --transition-pos 0.85,0.85 --transi
 hyprctl reload
 killall -SIGUSR2 waybar 2>/dev/null || ~/.config/hypr/scripts/waybar.sh &
 swaync-client -rs 2>/dev/null &
+pkill -x swayosd-server 2>/dev/null; swayosd-server >/dev/null 2>&1 &
 
 for sock in /tmp/kitty* @iris-kitty; do
     kitty @ --to "unix:$sock" set-colors --all --configured "$KITTY_FILE" 2>/dev/null
 done
 
-if pgrep -x "tmux" >/dev/null && [ -f "$TMUX_FILE" ]; then
-    tmux source-file "$TMUX_FILE" 2>/dev/null
+if tmux list-sessions >/dev/null 2>&1 && [ -f "$TMUX_FILE" ]; then
+    tmux source-file "$TMUX_FILE"
+    for client in $(tmux list-clients -F "#{client_name}" 2>/dev/null); do
+        tmux refresh-client -t "$client" -S 2>/dev/null
+    done
 fi
