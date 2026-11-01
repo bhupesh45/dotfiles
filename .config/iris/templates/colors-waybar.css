@@ -1,0 +1,20 @@
+@define-color bg #101116;
+@define-color fg {fg};
+@define-color surface {surface};
+@define-color dim {dim};
+@define-color accent {accent};
+@define-color red {red};
+@define-color green {green};
+@define-color yellow {yellow};
+
+/* ==========================================
+   Additional semantic colors
+   ========================================== */
+
+@define-color blue {color4};
+@define-color purple {color5};
+@define-color cyan {color6};
+@define-color orange {color3};
+
+@define-color black #101116;
+@define-color white {color15};

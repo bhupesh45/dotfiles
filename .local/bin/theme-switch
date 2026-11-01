@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+WALLPAPER="$1"
+
+if [ -z "$WALLPAPER" ] || [ ! -f "$WALLPAPER" ]; then
+    echo "Usage: theme-switch /path/to/wallpaper.jpg"
+    exit 1
+fi
+
+# 1. Generate base palette in dark mode
+iris "$WALLPAPER" --dark 1
+
+# 2. Color transformation helpers (matches Neovim boost_vibrancy & make_dark_bg)
+transform_color() {
+    local hex="${1#\#}"
+    local mode="$2"
+    local p1="$3"
+    local p2="$4"
+    local p3="${5:-230}"
+
+    awk -v hex="$hex" -v mode="$mode" -v p1="$p1" -v p2="$p2" -v p3="$p3" 'BEGIN {
+        r = strtonum("0x" substr(hex, 1, 2))
+        g = strtonum("0x" substr(hex, 3, 2))
+        b = strtonum("0x" substr(hex, 5, 2))
+        luma = 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+        if (mode == "dark") {
+            r = r * (1 - p2) + luma * p2
+            g = g * (1 - p2) + luma * p2
+            b = b * (1 - p2) + luma * p2
+            if (luma > p1 && luma > 0) {
+                s = p1 / luma
+                r *= s; g *= s; b *= s
+            }
+        } else if (mode == "vibrant") {
+            avg = (r + g + b) / 3.0
+            r = avg + (r - avg) * p1
+            g = avg + (g - avg) * p1
+            b = avg + (b - avg) * p1
+            if (r < 0) r = 0; if (r > 255) r = 255
+            if (g < 0) g = 0; if (g > 255) g = 255
+            if (b < 0) b = 0; if (b > 255) b = 255
+
+            luma = 0.2126 * r + 0.7152 * g + 0.0722 * b
+            if (luma < p2) {
+                if (luma < 5) { r = 40; g = 45; b = 60; luma = 46 }
+                s = p2 / luma
+                r = r * s; if (r > 255) r = 255
+                g = g * s; if (g > 255) g = 255
+                b = b * s; if (b > 255) b = 255
+            } else if (luma > p3 && luma > 0) {
+                s = p3 / luma
+                r *= s; g *= s; b *= s
+            }
+        }
+        printf "#%02x%02x%02x", int(r), int(g), int(b)
+    }'
+}
+
+CACHE_DIR="$HOME/.cache/iris"
+CSS_FILE="$CACHE_DIR/colors-waybar.css"
+KITTY_FILE="$CACHE_DIR/colors-kitty.conf"
+TMUX_FILE="$CACHE_DIR/colors-tmux.conf"
+JSON_FILE="$CACHE_DIR/colors.json"
+
+get_css_color() {
+    awk -v k="$1" '$1 == "@define-color" && $2 == k {gsub(";","",$3); print $3}' "$CSS_FILE"
+}
+
+get_json_color() {
+    awk -F'"' -v k="$1" '$2 == k {print $4}' "$JSON_FILE"
+}
+
+RAW_BG=$(get_css_color "bg")
+RAW_SURF=$(get_css_color "surface")
+RAW_FG=$(get_css_color "fg")
+RAW_DIM=$(get_css_color "dim")
+RAW_ACCENT=$(get_css_color "accent")
+RAW_RED=$(get_css_color "red")
+RAW_GREEN=$(get_css_color "green")
+RAW_YELLOW=$(get_css_color "yellow")
+RAW_PURPLE=$(get_json_color "syntax_keyword")
+RAW_ORANGE=$(get_json_color "syntax_const")
+
+if [ -n "$RAW_BG" ] && [ -n "$RAW_ACCENT" ]; then
+    NEW_BG=$(transform_color "$RAW_BG"         "dark"    8    0.45)
+    NEW_SURF=$(transform_color "$RAW_SURF"     "dark"    18   0.35)
+    NEW_FG=$(transform_color "$RAW_FG"         "vibrant" 1.20 215 245)
+    NEW_DIM=$(transform_color "$RAW_DIM"       "vibrant" 1.15 105 135)
+    NEW_ACCENT=$(transform_color "$RAW_ACCENT" "vibrant" 1.70 155 225)
+    NEW_RED=$(transform_color "$RAW_RED"       "vibrant" 1.75 145 220)
+    NEW_GREEN=$(transform_color "$RAW_GREEN"   "vibrant" 1.70 160 225)
+    NEW_YELLOW=$(transform_color "$RAW_YELLOW" "vibrant" 1.70 170 230)
+
+    # 2a. Patch Waybar & SwayNC CSS cache
+    sed -i "s/@define-color bg .*/@define-color bg ${NEW_BG};/" "$CSS_FILE"
+    sed -i "s/@define-color surface .*/@define-color surface ${NEW_SURF};/" "$CSS_FILE"
+    sed -i "s/@define-color fg .*/@define-color fg ${NEW_FG};/" "$CSS_FILE"
+    sed -i "s/@define-color dim .*/@define-color dim ${NEW_DIM};/" "$CSS_FILE"
+    sed -i "s/@define-color accent .*/@define-color accent ${NEW_ACCENT};/" "$CSS_FILE"
+    sed -i "s/@define-color red .*/@define-color red ${NEW_RED};/" "$CSS_FILE"
+    sed -i "s/@define-color green .*/@define-color green ${NEW_GREEN};/" "$CSS_FILE"
+    sed -i "s/@define-color yellow .*/@define-color yellow ${NEW_YELLOW};/" "$CSS_FILE"
+
+    # 2b. Patch Tmux cache (including @purple and @orange for Zellij modes)
+    if [ -f "$TMUX_FILE" ]; then
+        sed -i -E "s/^(set -g @bg ).*/\1\"${NEW_BG}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @fg ).*/\1\"${NEW_FG}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @gray ).*/\1\"${NEW_SURF}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @gray_light ).*/\1\"${NEW_DIM}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @green ).*/\1\"${NEW_GREEN}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @blue ).*/\1\"${NEW_ACCENT}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @yellow ).*/\1\"${NEW_YELLOW}\"/" "$TMUX_FILE"
+        sed -i -E "s/^(set -g @red ).*/\1\"${NEW_RED}\"/" "$TMUX_FILE"
+        if [ -n "$RAW_PURPLE" ]; then
+            NEW_PURPLE=$(transform_color "$RAW_PURPLE" "vibrant" 1.75 155 225)
+            sed -i -E "s/^(set -g @purple ).*/\1\"${NEW_PURPLE}\"/" "$TMUX_FILE"
+        fi
+        if [ -n "$RAW_ORANGE" ]; then
+            NEW_ORANGE=$(transform_color "$RAW_ORANGE" "vibrant" 1.75 160 230)
+            sed -i -E "s/^(set -g @orange ).*/\1\"${NEW_ORANGE}\"/" "$TMUX_FILE"
+        fi
+    fi
+
+    # 2c. Patch Kitty UI + boost ANSI colors 1..6 and 9..14
+    if [ -f "$KITTY_FILE" ]; then
+        sed -i -E "s/^(background|cursor_text_color|selection_foreground|active_tab_foreground|tab_bar_background|color0)\s+.*/\1 ${NEW_BG}/" "$KITTY_FILE"
+        sed -i -E "s/^(inactive_tab_background|inactive_border_color)\s+.*/\1 ${NEW_SURF}/" "$KITTY_FILE"
+        sed -i -E "s/^(foreground|color7|color15)\s+.*/\1 ${NEW_FG}/" "$KITTY_FILE"
+        sed -i -E "s/^(inactive_tab_foreground|color8)\s+.*/\1 ${NEW_DIM}/" "$KITTY_FILE"
+        sed -i -E "s/^(cursor|selection_background|active_tab_background|active_border_color)\s+.*/\1 ${NEW_ACCENT}/" "$KITTY_FILE"
+        sed -i -E "s/^(bell_border_color)\s+.*/\1 ${NEW_RED}/" "$KITTY_FILE"
+
+        for idx in 1 2 3 4 5 6 9 10 11 12 13 14; do
+            RAW_C=$(awk -v k="color${idx}" '$1 == k {print $2}' "$KITTY_FILE")
+            if [ -n "$RAW_C" ]; then
+                VIB_C=$(transform_color "$RAW_C" "vibrant" 1.75 155 230)
+                sed -i -E "s/^(color${idx})\s+.*/\1 ${VIB_C}/" "$KITTY_FILE"
+            fi
+        done
+    fi
+fi
+
+# 3. Transition wallpaper
+awww img "$WALLPAPER" --transition-type grow --transition-pos 0.85,0.85 --transition-step 90 --transition-fps 60
+
+# 4. Reload Hyprland, Waybar, SwayNC, Kitty, and Tmux
+hyprctl reload
+killall -SIGUSR2 waybar 2>/dev/null || ~/.config/hypr/scripts/waybar.sh &
+swaync-client -rs 2>/dev/null &
+
+for sock in /tmp/kitty* @iris-kitty; do
+    kitty @ --to "unix:$sock" set-colors --all --configured "$KITTY_FILE" 2>/dev/null
+done
+
+if pgrep -x "tmux" >/dev/null && [ -f "$TMUX_FILE" ]; then
+    tmux source-file "$TMUX_FILE" 2>/dev/null
+fi

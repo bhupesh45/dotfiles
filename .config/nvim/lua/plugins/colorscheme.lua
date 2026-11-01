@@ -99,6 +99,7 @@
 
 return {
 	"tiagovla/tokyodark.nvim",
+    enabled = false,
 	lazy = false,
 	priority = 1000,
 
